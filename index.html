@@ -142,7 +142,6 @@
       background: rgba(255,255,255,0.25);
     }
 
-    /* Animasi hati melayang */
     .heart-float {
       position: absolute;
       font-size: 2.5rem;
@@ -163,40 +162,26 @@
         opacity: 0; 
       }
     }
-
-    canvas { 
-      position: absolute; 
-      top: 0; left: 0; 
-      z-index: 1; 
-      pointer-events: none; 
-      display: none; /* Canvas confetti dihapus */
-    }
   </style>
 </head>
 <body>
 
-  <audio id="backsound" autoplay loop>
+  <audio id="backsound" loop>
     <source src="music.mp3" type="audio/mpeg">
-    Browser kamu tidak mendukung backsound.
   </audio>
 
-  <canvas id="canvas"></canvas>
-
-  <!-- SCREEN 1 -->
   <div class="screen active" id="screen1">
     <h1>Masukkan nama</h1>
     <input type="text" id="namaInput" autofocus placeholder="Nama">
     <button onclick="lanjutKeScreen2()">Lanjut ❤️</button>
   </div>
 
-  <!-- SCREEN 2 -->
   <div class="screen" id="screen2">
     <h1>Hai, <span id="namaTampil"></span>! 💕</h1>
     <p style="font-size:1.6rem; margin-top:20px;">Mas ada sesuatu spesial buat adek nih...</p>
     <p style="font-size:1.3rem; margin-top:50px; opacity:0.9;">klik dimana saja ya sayang</p>
   </div>
 
-  <!-- SCREEN 3 -->
   <div class="screen" id="screen3">
     <h1 style="font-size: 2.4rem; margin-bottom: 20px;">Klik 3 LOVE di bawah ini</h1>
     <div class="loves" id="loveContainer">
@@ -207,10 +192,8 @@
     <p style="font-size:1.4rem;">Klik sampai semua jadi merah ya 💕</p>
   </div>
 
-  <!-- SCREEN 4 -->
   <div class="screen" id="screen4">
     <h1>Hai, <span id="namaTampil2"></span>! </h1>
-    
     <div id="screen4Content" style="width:90%; max-width:720px; margin-top:10px;">
       <div class="bubble" id="bubble1"></div>
       <div class="bubble" id="bubble2"></div>
@@ -218,42 +201,29 @@
       <div class="bubble" id="bubble4"></div>
       <div class="bubble" id="bubble5"></div>
     </div>
-
     <div id="continueText4" class="click-to-continue" style="display: none;">
       klik disini sayang ❤️
     </div>
   </div>
 
-  <!-- SCREEN 5 -->
   <div class="screen" id="screen5">
     <h1>Hai lagi, <span id="namaTampil3"></span> 💕</h1>
-    
-    <div id="screen5Content" style="width:90%; max-width:680px; text-align:center; font-size:1.52rem; line-height:1.75; padding:0 20px; min-height:160px;">
-      <!-- Pesan akan diketik di sini -->
-    </div>
-
+    <div id="screen5Content" style="width:90%; max-width:680px; text-align:center; font-size:1.52rem; line-height:1.75; padding:0 20px; min-height:160px;"></div>
     <div id="continueText5" class="click-to-continue" style="display: none;">
       klik lagi disini ya
     </div>
   </div>
 
-  <!-- SCREEN 6 -->
   <div class="screen" id="screen6">
     <h1 style="font-size: 2.7rem; margin-bottom: 40px;">Mau kasih pesan balik ke Mas ?</h1>
-    
     <button onclick="balasWhatsApp()" style="padding: 20px 55px; font-size: 1.8rem;">
       Balas via WhatsApp 💬
     </button>
   </div>
 
   <script>
-    // Canvas tetap ada tapi confetti dihapus (hanya untuk compatibility)
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const backsound = document.getElementById('backsound');
 
-    // Typewriter Effect
     function typeWriter(element, text, speed = 38, callback) {
       element.innerHTML = `<span class="typing"></span>`;
       const span = element.querySelector('.typing');
@@ -272,6 +242,9 @@
     }
 
     function lanjutKeScreen2() {
+      // TRIGGER MUSIK DI SINI
+      backsound.play().catch(e => console.log("Autoplay dicegah, akan diputar saat klik berikutnya."));
+
       const nama = document.getElementById('namaInput').value.trim();
       if (nama === "") { 
         alert("Masukkan nama dulu ya 😊"); 
@@ -285,13 +258,13 @@
       document.getElementById('screen2').classList.add('active');
     }
 
-    // Screen 2 ke Screen 3
     document.getElementById('screen2').addEventListener('click', () => {
+      // Play lagi untuk memastikan di browser tertentu
+      backsound.play();
       document.getElementById('screen2').classList.remove('active');
       document.getElementById('screen3').classList.add('active');
     });
 
-    // Animasi Love melayang (khusus Screen 3 saat klik)
     function createFloatingLove() {
       const container = document.getElementById('screen3');
       for (let i = 0; i < 12; i++) {
@@ -299,20 +272,14 @@
           const heart = document.createElement('div');
           heart.className = 'heart-float';
           heart.textContent = ['❤️', '💖', '💗', '💕', '💞'][Math.floor(Math.random() * 5)];
-          
           heart.style.left = Math.random() * 100 + 'vw';
           heart.style.animationDuration = (3.5 + Math.random() * 3) + 's';
-          heart.style.fontSize = (2.2 + Math.random() * 1.2) + 'rem';
-          
           container.appendChild(heart);
-          
-          // Hapus setelah animasi selesai
           setTimeout(() => heart.remove(), 8000);
         }, i * 80);
       }
     }
 
-    // Klik Love di Screen 3
     let loveCount = 0;
     document.querySelectorAll('#loveContainer .love').forEach(love => {
       love.addEventListener('click', function() {
@@ -321,10 +288,7 @@
           this.classList.add('red');
           this.textContent = '❤️';
           loveCount++;
-
-          // Munculkan animasi love setiap kali diklik
           createFloatingLove();
-
           if (loveCount === 3) {
             setTimeout(() => {
               document.getElementById('screen3').classList.remove('active');
@@ -367,42 +331,26 @@
       typeNext();
     }
 
-    document.getElementById('continueText4').addEventListener('click', lanjutKeScreen5);
-
-    function lanjutKeScreen5() {
+    document.getElementById('continueText4').addEventListener('click', () => {
       document.getElementById('screen4').classList.remove('active');
       document.getElementById('screen5').classList.add('active');
-
       const pesan5 = `Oiya sayang, semoga di usia yang baru ini adek menjadi istri yang sholehah,\ntambah sayang sama Mas,\ndan semoga kita cepet bersama - sama \n\nAamiin ya Rabbal 'alamin ❤️\n\nMas sayang banget sama adek.`;
-      
-      const content5 = document.getElementById('screen5Content');
-      
-      typeWriter(content5, pesan5, 40, () => {
-        setTimeout(() => {
-          document.getElementById('continueText5').style.display = 'block';
-        }, 800);
+      typeWriter(document.getElementById('screen5Content'), pesan5, 40, () => {
+        setTimeout(() => document.getElementById('continueText5').style.display = 'block', 800);
       });
-    }
+    });
 
-    document.getElementById('continueText5').addEventListener('click', lanjutKeScreen6);
-
-    function lanjutKeScreen6() {
+    document.getElementById('continueText5').addEventListener('click', () => {
       document.getElementById('screen5').classList.remove('active');
       document.getElementById('screen6').classList.add('active');
-    }
+    });
 
     function balasWhatsApp() {
-  const phone = "6285642571263"; 
-  const text = "Makasih banyak Mas untuk ucapannya yang manis 💕 Adek sayang banget sama Mas. Semoga kita selalu bersama ya ❤️";
-  const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-  
-  window.open(waUrl, '_blank');
-}
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
+      const phone = "6285642571263"; 
+      const text = "Makasih banyak Mas untuk ucapannya yang manis 💕 Adek sayang banget sama Mas. Semoga kita selalu bersama ya ❤️";
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    }
   </script>
 </body>
 </html>
