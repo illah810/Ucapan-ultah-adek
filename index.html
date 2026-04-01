@@ -5,13 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selamat Ulang Tahun Sayang! 🎉💕</title>
   <style>
+    :root {
+      --primary-pink: #ff6b6b;
+      --soft-pink: #ff9a9e;
+      --primary-blue: #007bff;
+    }
+
     body {
       margin: 0; padding: 0;
       height: 100vh;
-      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a1c4fd, #ff9a9e);
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #ffd1ff);
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       overflow: hidden;
       text-align: center;
@@ -30,7 +36,6 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      z-index: 10;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -38,129 +43,95 @@
     .active { display: flex !important; }
 
     input {
-      padding: 18px 25px;
-      font-size: 1.8rem;
-      width: 320px;
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      width: 80%;
+      max-width: 300px;
       text-align: center;
       border: none;
       border-radius: 50px;
-      margin: 25px 0;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      margin: 20px 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      outline: none;
     }
 
-    input:focus { outline: 4px solid #ff6b6b; }
-
     button {
-      padding: 18px 50px;
-      font-size: 1.7rem;
+      padding: 15px 40px;
+      font-size: 1.2rem;
       background: white;
-      color: #ff6b6b;
+      color: var(--primary-pink);
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      margin-top: 30px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
-    button:hover {
-      transform: scale(1.05);
-      background: #ff6b6b;
-      color: white;
-    }
-
-    h1 { 
-      font-size: 3.1rem; 
-      margin: 15px 0 10px; 
-      text-shadow: 0 0 15px rgba(0,0,0,0.4); 
-    }
-
-    .loves { 
-      font-size: 5rem; 
-      display: flex; 
-      gap: 50px; 
-      margin: 30px 0; 
-      cursor: pointer; 
-      user-select: none; 
-    }
-    .love { 
-      transition: all 0.4s ease; 
-    }
-    .love.red { 
-      color: #ff4757; 
-      transform: scale(1.4); 
-    }
+    button:hover { transform: scale(1.1); }
 
     .bubble {
-      background: rgba(255, 255, 255, 0.95);
-      color: #ff4757;
-      padding: 14px 22px;
-      margin: 12px auto;
-      max-width: 520px;
-      border-radius: 22px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-      position: relative;
-      font-size: 1.48rem;
-      line-height: 1.55;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 15px 20px;
+      margin: 10px auto;
+      max-width: 90%;
+      border-radius: 20px;
+      border-bottom-left-radius: 5px;
       opacity: 0;
-      transform: translateY(15px);
+      text-align: left;
     }
 
-    .bubble:after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 40px;
-      border: 10px solid transparent;
-      border-top-color: rgba(255, 255, 255, 0.95);
-    }
+    .loves { font-size: 3.5rem; display: flex; gap: 20px; margin: 30px 0; }
+    .love { cursor: pointer; transition: transform 0.3s ease; }
+    .love.red { transform: scale(1.3); filter: drop-shadow(0 0 10px white); }
 
-    .typing {
-      overflow: hidden;
-      white-space: pre-wrap;
-      border-right: 3px solid #ff4757;
-      animation: typing-cursor 0.7s step-end infinite;
+    /* Custom Alert Styles */
+    #customAlert {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
     }
-
-    @keyframes typing-cursor {
-      50% { border-color: transparent; }
-    }
-
-    .click-to-continue {
-      font-size: 1.45rem;
-      margin-top: 40px;
-      padding: 10px 28px;
+    .alert-content {
+      background: white;
+      padding: 30px;
       border-radius: 30px;
-      opacity: 0.9;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-block;
+      width: 80%;
+      max-width: 320px;
+      color: #333;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
-
-    .click-to-continue:hover {
-      opacity: 1;
-      transform: scale(1.08);
-      background: rgba(255,255,255,0.25);
+    .success-icon {
+      font-size: 50px;
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+    .btn-blue {
+      background: var(--primary-blue);
+      color: white;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 50px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .heart-float {
       position: absolute;
-      font-size: 2.5rem;
-      animation: floatHeart 5s linear infinite;
-      z-index: 5;
       pointer-events: none;
-      user-select: none;
+      animation: floatHeart 4s ease-out forwards;
+      z-index: 999;
     }
-
     @keyframes floatHeart {
-      0% { 
-        transform: translateY(120px) scale(0.4) rotate(0deg); 
-        opacity: 0; 
-      }
-      15% { opacity: 1; }
-      100% { 
-        transform: translateY(-850px) scale(1.4) rotate(25deg); 
-        opacity: 0; 
-      }
+      0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(2) rotate(45deg); opacity: 0; }
     }
   </style>
 </head>
@@ -171,185 +142,146 @@
   </audio>
 
   <div class="screen active" id="screen1">
-    <h1>Masukkan nama</h1>
-    <input type="text" id="namaInput" autofocus placeholder="Nama">
-    <button onclick="lanjutKeScreen2()">Lanjut ❤️</button>
+    <h1>Hallo Cantik... ❤️</h1>
+    <p>Boleh tau siapa nama kamu?</p>
+    <input type="text" id="namaInput" placeholder="Ketik nama kamu di sini...">
+    <button onclick="mulai()">Lanjut ❤️</button>
   </div>
 
-  <div class="screen" id="screen2">
-    <h1>Hai, <span id="namaTampil"></span>! 💕</h1>
-    <p style="font-size:1.6rem; margin-top:20px;">Mas ada sesuatu spesial buat adek nih...</p>
-    <p style="font-size:1.3rem; margin-top:50px; opacity:0.9;">klik dimana saja ya sayang</p>
+  <div class="screen" id="screen2" onclick="keScreen3()">
+    <h1>Hai, <span class="namaTampil"></span>! 💕</h1>
+    <p>Mas ada sesuatu spesial buat kamu...</p>
+    <div style="margin-top:20px; opacity:0.7; cursor:pointer;">Klik di mana saja ya sayang</div>
   </div>
 
   <div class="screen" id="screen3">
-    <h1 style="font-size: 2.4rem; margin-bottom: 20px;">Klik 3 LOVE di bawah ini</h1>
-    <div class="loves" id="loveContainer">
-      <span class="love" data-clicked="false">🤍</span>
-      <span class="love" data-clicked="false">🤍</span>
-      <span class="love" data-clicked="false">🤍</span>
+    <h1>Klik 3 LOVE di bawah ini</h1>
+    <div class="loves">
+      <span class="love" onclick="handleLove(this)">🤍</span>
+      <span class="love" onclick="handleLove(this)">🤍</span>
+      <span class="love" onclick="handleLove(this)">🤍</span>
     </div>
-    <p style="font-size:1.4rem;">Klik sampai semua jadi merah ya 💕</p>
   </div>
 
   <div class="screen" id="screen4">
-    <h1>Hai, <span id="namaTampil2"></span>! </h1>
-    <div id="screen4Content" style="width:90%; max-width:720px; margin-top:10px;">
-      <div class="bubble" id="bubble1"></div>
-      <div class="bubble" id="bubble2"></div>
-      <div class="bubble" id="bubble3"></div>
-      <div class="bubble" id="bubble4"></div>
-      <div class="bubble" id="bubble5"></div>
+    <div id="bubblesContainer">
+      <div class="bubble" id="b1"></div>
+      <div class="bubble" id="b2"></div>
+      <div class="bubble" id="b3"></div>
+      <div class="bubble" id="b4"></div>
+      <div class="bubble" id="b5"></div>
     </div>
-    <div id="continueText4" class="click-to-continue" style="display: none;">
-      klik disini sayang ❤️
-    </div>
+    <button id="btnNext4" style="display:none; margin-top:20px;" onclick="keScreen5()">Klik untuk lanjut ❤️</button>
   </div>
 
   <div class="screen" id="screen5">
-    <h1>Hai lagi, <span id="namaTampil3"></span> 💕</h1>
-    <div id="screen5Content" style="width:90%; max-width:680px; text-align:center; font-size:1.52rem; line-height:1.75; padding:0 20px; min-height:160px;"></div>
-    <div id="continueText5" class="click-to-continue" style="display: none;">
-      klik lagi disini ya
-    </div>
+    <div id="pesanAkhir" style="font-size: 1.2rem; padding: 20px; line-height: 1.6; white-space: pre-line;"></div>
+    <button id="btnNext5" style="display:none;" onclick="keScreen6()">Ada satu lagi...</button>
   </div>
 
   <div class="screen" id="screen6">
-    <h1 style="font-size: 2.7rem; margin-bottom: 40px;">Mau kasih pesan balik ke Mas ?</h1>
-    <button onclick="balasWhatsApp()" style="padding: 20px 55px; font-size: 1.8rem;">
-      Balas via WhatsApp 💬
-    </button>
+    <h1 id="levelUpText"></h1>
+    <button id="btnBalas" style="display:none; margin-top:30px;" onclick="showMyAlert()">Balas</button>
+  </div>
+
+  <div id="customAlert">
+    <div class="alert-content">
+      <div class="success-icon">✔</div>
+      <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">OK!</div>
+      <div style="font-size: 1rem; color: #666;">kirim jawabannya ke WhatsApp Mas ya 😊</div>
+      <button class="btn-blue" onclick="finalWA()">Kirim Sekarang</button>
+    </div>
   </div>
 
   <script>
     const backsound = document.getElementById('backsound');
-
-    function typeWriter(element, text, speed = 38, callback) {
-      element.innerHTML = `<span class="typing"></span>`;
-      const span = element.querySelector('.typing');
-      let i = 0;
-      function type() {
-        if (i < text.length) {
-          span.textContent += text.charAt(i);
-          i++;
-          setTimeout(type, speed);
-        } else {
-          span.style.borderRight = 'none';
-          if (callback) callback();
-        }
-      }
-      type();
-    }
-
-    function lanjutKeScreen2() {
-      // TRIGGER MUSIK DI SINI
-      backsound.play().catch(e => console.log("Autoplay dicegah, akan diputar saat klik berikutnya."));
-
-      const nama = document.getElementById('namaInput').value.trim();
-      if (nama === "") { 
-        alert("Masukkan nama dulu ya 😊"); 
-        return; 
-      }
-      document.getElementById('namaTampil').textContent = nama;
-      document.getElementById('namaTampil2').textContent = nama;
-      document.getElementById('namaTampil3').textContent = nama;
-      
-      document.getElementById('screen1').classList.remove('active');
-      document.getElementById('screen2').classList.add('active');
-    }
-
-    document.getElementById('screen2').addEventListener('click', () => {
-      // Play lagi untuk memastikan di browser tertentu
-      backsound.play();
-      document.getElementById('screen2').classList.remove('active');
-      document.getElementById('screen3').classList.add('active');
-    });
-
-    function createFloatingLove() {
-      const container = document.getElementById('screen3');
-      for (let i = 0; i < 12; i++) {
-        setTimeout(() => {
-          const heart = document.createElement('div');
-          heart.className = 'heart-float';
-          heart.textContent = ['❤️', '💖', '💗', '💕', '💞'][Math.floor(Math.random() * 5)];
-          heart.style.left = Math.random() * 100 + 'vw';
-          heart.style.animationDuration = (3.5 + Math.random() * 3) + 's';
-          container.appendChild(heart);
-          setTimeout(() => heart.remove(), 8000);
-        }, i * 80);
-      }
-    }
-
     let loveCount = 0;
-    document.querySelectorAll('#loveContainer .love').forEach(love => {
-      love.addEventListener('click', function() {
-        if (this.getAttribute('data-clicked') === 'false') {
-          this.setAttribute('data-clicked', 'true');
-          this.classList.add('red');
-          this.textContent = '❤️';
-          loveCount++;
-          createFloatingLove();
-          if (loveCount === 3) {
-            setTimeout(() => {
-              document.getElementById('screen3').classList.remove('active');
-              document.getElementById('screen4').classList.add('active');
-              startTypingSequenceScreen4();
-            }, 800);
-          }
-        }
-      });
-    });
 
-    function startTypingSequenceScreen4() {
-      const texts = [
-        "Barakallahu fii umrik, sayangku 💕",
-        "SELAMAT ULANG TAHUN SAYANG",
-        "Semoga Mas selalu bisa jadi alasan senyummu",
-        "Semoga Allah berikan kesehatan, rezeki melimpah",
-        "dan kebahagiaan yang tiada akhir. Aamiin"
-      ];
-      const bubbles = [
-        document.getElementById('bubble1'), 
-        document.getElementById('bubble2'), 
-        document.getElementById('bubble3'), 
-        document.getElementById('bubble4'), 
-        document.getElementById('bubble5')
-      ];
-
-      let index = 0;
-      function typeNext() {
-        if (index < texts.length) {
-          bubbles[index].style.opacity = 1;
-          typeWriter(bubbles[index], texts[index], 50, () => {
-            index++;
-            setTimeout(typeNext, 900);
-          });
-        } else {
-          setTimeout(() => document.getElementById('continueText4').style.display = 'block', 800);
-        }
-      }
-      typeNext();
+    function mulai() {
+      const nama = document.getElementById('namaInput').value.trim();
+      if (nama === "") { alert("Isi namanya dulu ya 😊"); return; }
+      document.querySelectorAll('.namaTampil').forEach(el => el.innerText = nama);
+      backsound.play().catch(() => {});
+      pindah('screen1', 'screen2');
     }
 
-    document.getElementById('continueText4').addEventListener('click', () => {
-      document.getElementById('screen4').classList.remove('active');
-      document.getElementById('screen5').classList.add('active');
-      const pesan5 = `Oiya sayang, semoga di usia yang baru ini adek menjadi istri yang sholehah,\ntambah sayang sama Mas,\ndan semoga kita cepet bersama - sama \n\nAamiin ya Rabbal 'alamin ❤️\n\nMas sayang banget sama adek.`;
-      typeWriter(document.getElementById('screen5Content'), pesan5, 40, () => {
-        setTimeout(() => document.getElementById('continueText5').style.display = 'block', 800);
+    function keScreen3() { pindah('screen2', 'screen3'); }
+
+    function handleLove(el) {
+      if (el.innerText === '❤️') return;
+      el.innerText = '❤️'; el.classList.add('red');
+      loveCount++;
+      
+      // Efek Love diperbanyak dan diperbesar ukurannya
+      for(let i=0; i<15; i++) {
+        setTimeout(createHeart, i * 50);
+      }
+
+      if (loveCount === 3) setTimeout(() => { pindah('screen3', 'screen4'); jalankanPesan(); }, 800);
+    }
+
+    function jalankanPesan() {
+      const pesans = ["Barakallahu fii umrik, sayangku 💕", "SELAMAT ULANG TAHUN!", "Semoga Mas selalu bisa jadi alasan senyummu,", "Semoga Allah berikan kesehatan, rezeki melimpah,", "dan kebahagiaan yang tiada akhir. Aamiin."];
+      let i = 0;
+      function show() {
+        if (i < pesans.length) {
+          const b = document.getElementById(`b${i+1}`); b.style.opacity = "1";
+          typeWriter(b, pesans[i], 50, () => { i++; setTimeout(show, 800); });
+        } else { document.getElementById('btnNext4').style.display = "block"; }
+      }
+      show();
+    }
+
+    function keScreen5() {
+      pindah('screen4', 'screen5');
+      const text5 = "Oiya sayang, semoga di usia yang baru ini adek menjadi istri yang sholehah, makin sayang sama Mas dan semoga kita cepat bersama - sama,\n\nAamiin ya Rabbal 'alamin,\nMas sayang banget Adek ❤️";
+      typeWriter(document.getElementById('pesanAkhir'), text5, 40, () => {
+        document.getElementById('btnNext5').style.display = "block";
       });
-    });
+    }
 
-    document.getElementById('continueText5').addEventListener('click', () => {
-      document.getElementById('screen5').classList.remove('active');
-      document.getElementById('screen6').classList.add('active');
-    });
+    function keScreen6() {
+      pindah('screen5', 'screen6');
+      // Mengganti emoji bintang dengan terompet
+      typeWriter(document.getElementById('levelUpText'), "Happy Level Up Day 🥳🎺", 70, () => {
+        setTimeout(() => { document.getElementById('btnBalas').style.display = "block"; }, 500);
+      });
+    }
 
-    function balasWhatsApp() {
-      const phone = "6285642571263"; 
-      const text = "Makasih banyak Mas untuk ucapannya yang manis 💕 Adek sayang banget sama Mas. Semoga kita selalu bersama ya ❤️";
-      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-      window.open(waUrl, '_blank');
+    function showMyAlert() { document.getElementById('customAlert').style.display = 'flex'; }
+
+    function finalWA() {
+      const nama = document.getElementById('namaInput').value;
+      const nomor = "6285642571263";
+      const pesan = `Makasih banyak ya Mas buat ucapannya! Adek sayang banget sama Mas ❤️ Semoga doa-doa kita dikabulkan. Aamiin!`;
+      window.open(`https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`);
+    }
+
+    function pindah(f, t) {
+      document.getElementById(f).classList.remove('active');
+      document.getElementById(t).classList.add('active');
+    }
+
+    function typeWriter(el, txt, spd, cb) {
+      let j = 0; el.innerHTML = "";
+      function t() {
+        if (j < txt.length) { el.innerHTML += txt.charAt(j); j++; setTimeout(t, spd); }
+        else if (cb) cb();
+      }
+      t();
+    }
+
+    function createHeart() {
+      const h = document.createElement("div");
+      h.className = "heart-float"; 
+      const emojis = ["❤️", "💖", "💕", "💗", "💘"];
+      h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = Math.random() * 100 + "vw"; 
+      h.style.bottom = "0";
+      // Ukuran diperbesar (Range 30px - 60px)
+      h.style.fontSize = (Math.random() * 30 + 30) + "px"; 
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 4000);
     }
   </script>
 </body>
